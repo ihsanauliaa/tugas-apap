@@ -37,9 +37,8 @@ public class PasienController {
         pasien.setEmergencyContactModel(emergencyContact);
         pasienService.addPasien(pasien);
         pasienService.addEmergencyContact(emergencyContact);
-        PasienModel pasienModel = pasienService.getPasiendByIdPasien(pasien.getIdPasien()).get();
-        pasienModel.setEmergencyContactModel(emergencyContact);
-        // pasienService.addEmergencyContact(emergencyContact);
+        //PasienModel pasienModel = pasienService.getPasiendByIdPasien(pasien.getIdPasien()).get();
+        //pasienModel.setEmergencyContactModel(emergencyContact);
         model.addAttribute("namaPasien", pasien.getNamaPasien());
         model.addAttribute("namaEmergencyContact", emergencyContact.getNamaEC());
         return "add-pasien";
