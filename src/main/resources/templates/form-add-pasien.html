@@ -26,7 +26,10 @@
         <br>
         Jenis Kelamin: <br>
         <label>
-            <input type="text" th:field="*{jenisKelamin}" name="jenisKelamin" />
+            <select th:field="*{jenisKelamin}" name="jenisKelamin">
+                <option th:value="1" th:text="Laki-laki"></option>
+                <option th:value="2" th:text="Perempuan"></option>
+            </select>
         </label>
         <br>
         Tanggal lahir: <br>
