@@ -34,6 +34,7 @@ public class PasienController {
 
     @RequestMapping(path = "/pasien/add", method = RequestMethod.POST)
     public String addPasienSubmit(@ModelAttribute PasienModel pasien, @ModelAttribute EmergencyContactModel emergencyContact, Model model) {
+        pasien.setEmergencyContactModel(emergencyContact);
         pasienService.addPasien(pasien);
         pasienService.addEmergencyContact(emergencyContact);
         PasienModel pasienModel = pasienService.getPasiendByIdPasien(pasien.getIdPasien()).get();
