@@ -18,8 +18,6 @@ import java.util.List;
 
 @Controller
 public class PasienController {
-    @Autowired
-    private AsuransiDB asuransiDB;
 
     @Qualifier("pasienServiceImpl")
     @Autowired
@@ -35,6 +33,13 @@ public class PasienController {
         PasienModel newPasien = new PasienModel();
         EmergencyContactModel newEmergencyContactModel = new EmergencyContactModel();
         List<AsuransiModel> newAsuransiModel = pasienService.getAsuransiList();
+
+        AsuransiModel newAsuransi = new AsuransiModel();
+
+        List<AsuransiModel> listAsuransi = new ArrayList<>();
+        listAsuransi.add(newAsuransi);
+        newPasien.setListAsuransi(listAsuransi);
+        // newPasien.setEmergencyContactModel(newEmergencyContactModel);
 
         model.addAttribute("emergencyContact", newEmergencyContactModel);
         model.addAttribute("pasien", newPasien);
@@ -60,5 +65,22 @@ public class PasienController {
         model.addAttribute("namaPasien", pasien.getNamaPasien());
         model.addAttribute("namaEmergencyContact", emergencyContact.getNamaEC());
         return "add-pasien";
+    }
+
+    @RequestMapping(value = "/pasien/add", method = RequestMethod.POST, params = {"addRow"})
+    public String addRow(@ModelAttribute PasienModel pasien, Model model) {
+        if (pasien.getListAsuransi() == null) {
+            pasien.setListAsuransi(new ArrayList<>());
+        }
+
+        EmergencyContactModel newEmergencyContactModel = new EmergencyContactModel();
+
+        pasien.getListAsuransi().add(new AsuransiModel());
+        List<AsuransiModel> newAsuransiModel = pasienService.getAsuransiList();
+
+        model.addAttribute("pasien", pasien);
+        model.addAttribute("emergencyContact", newEmergencyContactModel);
+        model.addAttribute("asuransi", newAsuransiModel);
+        return "form-add-pasien";
     }
 }

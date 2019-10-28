@@ -8,67 +8,69 @@
 <h2> Selamat datang di SIPAS</h2>
 <h3> Tambah Pasien</h3>
 <form th:action="@{/pasien/add}" method="POST" th:object="${pasien}">
-        <input type ="hidden" th:field="*{idPasien}" />
-        Nama: <br>
-        <label>
-            <input type="text" th:field="*{namaPasien}" name="namaPasien" />
-        </label>
-        <br>
-        Kode: <br>
-        <label>
-            <input type="text" th:field="*{kodePasien}" name="kodePasien" />
-        </label>
-        <br>
-        NIK: <br>
-        <label>
-            <input type="text" th:field="*{nikPasien}" name="nikPasien" />
-        </label>
-        <br>
-        Jenis Kelamin: <br>
-        <label>
-            <select th:field="*{jenisKelamin}" name="jenisKelamin">
-                <option th:value="1" th:text="Laki-laki"></option>
-                <option th:value="2" th:text="Perempuan"></option>
-            </select>
-        </label>
-        <br>
-        Asuransi: <br>
-        <label>
-            <select class="form-control" name="listAsuransi">
-                <option value="">Pilih Asuransi</option>
-                <option th:each="asuransiIn : ${asuransi}"
-                        th:value="${asuransiIn.idAsuransi}"
-                        th:text="${asuransiIn.namaAsuransi}">
-                </option>
-            </select>
-        </label>
-        <br>
-        Tanggal lahir: <br>
-        <label>
-            <input type="date" th:field="*{tanggalLahir}" name="tanggalLahir" />
-        </label>
-        <br>
-        Tempat Lahir: <br>
-        <label>
-            <input type="text" th:field="*{tempatLahir}" name="tempatLahir" />
-        </label>
-        <br>
-        <input type ="hidden" th:value="${emergencyContact.idEC}" name="idEC"/>
-        NIK EC: <br>
-        <label>
-            <input type="text" th:value="${emergencyContact.nikEC}" name="nikEC" />
-        </label>
-        <br>
-        Nama Emergency Contact: <br>
-        <label>
-            <input type="text" th:value="${emergencyContact.namaEC}" name="namaEC" />
-        </label>
-        <br>
-        Nomor Telepon EC: <br>
-        <label>
-            <input type="text" th:value="${emergencyContact.hpEC}" name="hpEC" />
-        </label>
-        <br>
+    <input type ="hidden" th:field="*{idPasien}" />
+    Nama: <br>
+    <label>
+        <input type="text" th:field="*{namaPasien}" name="namaPasien" />
+    </label>
+    <br>
+    Kode: <br>
+    <label>
+        <input type="text" th:field="*{kodePasien}" name="kodePasien" />
+    </label>
+    <br>
+    NIK: <br>
+    <label>
+        <input type="text" th:field="*{nikPasien}" name="nikPasien" />
+    </label>
+    <br>
+    Jenis Kelamin: <br>
+    <label>
+        <select th:field="*{jenisKelamin}" name="jenisKelamin">
+            <option th:value="1" th:text="Laki-laki"></option>
+            <option th:value="2" th:text="Perempuan"></option>
+        </select>
+    </label>
+    <br>
+    Asuransi: <br>
+    <label>
+        <select th:each="pasienIn, iterationStatus : *{listAsuransi}"
+                th:field="${pasien.listAsuransi[__${iterationStatus.index}__].idAsuransi}">
+            <option value="">Pilih Asuransi</option>
+            <option th:each="asuransiIn : ${asuransi}"
+                    th:value="${asuransiIn.idAsuransi}"
+                    th:text="${asuransiIn.namaAsuransi}">
+            </option>
+        </select>
+        <button type="submit" name="addRow" class="btn btn-primary">Add Row</button>
+    </label>
+    <br>
+    Tanggal lahir: <br>
+    <label>
+        <input type="date" th:field="*{tanggalLahir}" name="tanggalLahir" />
+    </label>
+    <br>
+    Tempat Lahir: <br>
+    <label>
+        <input type="text" th:field="*{tempatLahir}" name="tempatLahir" />
+    </label>
+    <br>
+    <input type ="hidden" th:field="${emergencyContact.idEC}" name="idEC"/>
+    NIK EC: <br>
+    <label>
+        <input type="text" th:field="${emergencyContact.nikEC}" name="nikEC" />
+    </label>
+    <br>
+    Nama Emergency Contact: <br>
+    <label>
+        <input type="text" th:field="${emergencyContact.namaEC}" name="namaEC" />
+    </label>
+    <br>
+    Nomor Telepon EC: <br>
+    <label>
+        <input type="text" th:field="${emergencyContact.hpEC}" name="hpEC" />
+    </label>
+    <br>
     <button type="submit"> Submit </button>
 </form>
 </body>
