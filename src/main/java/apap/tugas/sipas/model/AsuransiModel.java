@@ -29,6 +29,14 @@ public class AsuransiModel implements Serializable {
     @ManyToMany(mappedBy = "listAsuransi")
     List<PasienModel> listPasien;
 
+    public List<PasienModel> getListPasien() {
+        return listPasien;
+    }
+
+    public void setListPasien(List<PasienModel> listPasien) {
+        this.listPasien = listPasien;
+    }
+
     public Long getIdAsuransi() {
         return idAsuransi;
     }

@@ -4,6 +4,7 @@ import apap.tugas.sipas.model.AsuransiModel;
 import apap.tugas.sipas.model.DiagnosisPenyakitModel;
 import apap.tugas.sipas.model.EmergencyContactModel;
 import apap.tugas.sipas.model.PasienModel;
+import apap.tugas.sipas.repository.AsuransiDB;
 import apap.tugas.sipas.repository.EmergencyContactDB;
 import apap.tugas.sipas.repository.PasienDB;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class PasienServiceImpl implements PasienService {
 
     @Autowired
     private EmergencyContactDB emergencyContactDB;
+
+    @Autowired
+    private AsuransiDB asuransiDB;
 
     @Override
     public void addPasien(PasienModel pasienModel) {
@@ -50,7 +54,7 @@ public class PasienServiceImpl implements PasienService {
 
     @Override
     public List<AsuransiModel> getAsuransiList() {
-        return null;
+        return asuransiDB.findAll();
     }
 
     @Override

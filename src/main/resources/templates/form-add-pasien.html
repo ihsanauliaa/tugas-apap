@@ -32,6 +32,17 @@
             </select>
         </label>
         <br>
+        Asuransi: <br>
+        <label>
+            <select class="form-control" name="listAsuransi">
+                <option value="">Pilih Asuransi</option>
+                <option th:each="asuransiIn : ${asuransi}"
+                        th:value="${asuransiIn.idAsuransi}"
+                        th:text="${asuransiIn.namaAsuransi}">
+                </option>
+            </select>
+        </label>
+        <br>
         Tanggal lahir: <br>
         <label>
             <input type="date" th:field="*{tanggalLahir}" name="tanggalLahir" />
