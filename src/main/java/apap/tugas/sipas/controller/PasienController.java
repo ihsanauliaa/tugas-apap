@@ -24,7 +24,8 @@ public class PasienController {
     private PasienService pasienService;
 
     @RequestMapping("/")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("active", "active");
         return "home";
     }
 
