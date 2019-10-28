@@ -8,12 +8,55 @@
 
 <body>
 
-<nav th:replace="fragments/fragment :: navbar"></nav>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
 
-    <h2> Selamat datang di SIPAS</h2>
-    <h3> Tambah Pasien</h3>
-    <td> <a th:href="@{/pasien/add}"> Tambah Pasien </a> </td>
-    <br>
-    <td> <a th:href="@{/pasien/view-all}"> View All </a> </td>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <h1>Sistem Informasi Pasien</h1>
+            <p>Sistem Informasi Pasien (SIPAS) merupakan portal untuk melakukan berbagai macam kegiatan administrasi pasien.</p>
+            <button class="btn btn-primary">
+                <a th:href="@{pasien/add}" style="color: white"> Tambah pasien </a>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-header h-100">Daftar Pasien</div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">NIK</th>
+                                <th scope="col">Jenis Kelamin</th>
+                                <th scope="col">Kode Pasien</th>
+                                <th scope="col">Tempat Lahir</th>
+                                <th scope="col">Tanggal Lahir</th>
+                                <th scope="col">Telepon Emergency Contact</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="pasien, iterationStatus : ${listPasien}">
+                                <td><span th:text="${iterationStatus.index} + 1"></span></td>
+                                <td><span th:text="${pasien.nikPasien}"></span></td>
+                                <td><span th:text="${pasien.jenisKelamin}"></span></td>
+                                <td><span th:text="${pasien.kodePasien}"></span></td>
+                                <td><span th:text="${pasien.tempatLahir}"></span></td>
+                                <td><span th:text="${pasien.tanggalLahir}"></span></td>
+                                <td><span th:text="${pasien.emergencyContactModel.hpEC}"></span></td>
+                                <td>
+                                    <button class="btn btn-primary"><a href="#" style="color: white"> Tambah Diagnosis </a></button>
+                                    <button class="btn btn-primary"><a href="#" style="color: white"> Lihat </a></button>
+                                    <button class="btn btn-primary"><a href="#" style="color: white"> Ubah </a></button>
+                                    <button class="btn btn-danger"><a href="#" style="color: white"> Hapus </a></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

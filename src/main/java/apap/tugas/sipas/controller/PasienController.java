@@ -26,6 +26,7 @@ public class PasienController {
     @RequestMapping("/")
     public String home(Model model) {
         model.addAttribute("active", "active");
+        model.addAttribute("listPasien", pasienService.getPasienList());
         return "home";
     }
 
@@ -64,6 +65,7 @@ public class PasienController {
         //PasienModel pasienModel = pasienService.getPasiendByIdPasien(pasien.getIdPasien()).get();
         //pasienModel.setEmergencyContactModel(emergencyContact);
         model.addAttribute("namaPasien", pasien.getNamaPasien());
+        model.addAttribute("kodePasien", pasien.getKodePasien());
         model.addAttribute("namaEmergencyContact", emergencyContact.getNamaEC());
         return "add-pasien";
     }
