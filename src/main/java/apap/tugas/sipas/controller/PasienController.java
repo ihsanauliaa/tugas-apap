@@ -152,4 +152,32 @@ public class PasienController {
         return "tambah-diagnosis";
     }
 
+    @RequestMapping(value = "pasien/cari/jenis-kelamin", method = RequestMethod.GET)
+    public String searchByGenderForm(Model model) {
+        model.addAttribute("listPenyakit", diagnosisService.getPenyakitList());
+        return "form-search-gender";
+    }
+
+    @RequestMapping(value = "pasien/cari/jenis-kelamin", method = RequestMethod.POST)
+    public String searchByGender(@RequestParam Long idDiagnosis, Model model) {
+        DiagnosisPenyakitModel diagnosis = diagnosisService.getPenyakitByIDPenyakit(idDiagnosis).get();
+        List<PasienModel> listPasien = diagnosis.getListPasien();
+
+        int counterMen = 0;
+        int counterWomen = 0;
+
+        for (PasienModel pasien : listPasien) {
+            if (pasien.getJenisKelamin() == 1) {
+                counterMen++;
+            }
+            if (pasien.getJenisKelamin() == 2) {
+                counterWomen++;
+            }
+        }
+        model.addAttribute("counterMen", counterMen);
+        model.addAttribute("counterWomen", counterWomen);
+        model.addAttribute("namaPenyakit", diagnosis.getNamaPenyakit());
+        return "search-gender";
+    }
+
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cari Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header h-100">Detail Data Pasien</div>
+                <div class="card-body">
+                    <form th:action="@{/pasien/cari/jenis-kelamin}" method="POST" th:object="${targetPasien}">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            <select name="idDiagnosis" class="form-control selectpicker">
+                                <option value="">Pilih Penyakit</option>
+                                <option th:each="penyakit : ${listPenyakit}"
+                                        th:value="${penyakit.idPenyakit}"
+                                        th:text="${penyakit.namaPenyakit}"></option>
+                            </select>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-primary">Cari</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
