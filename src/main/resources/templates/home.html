@@ -45,9 +45,9 @@
                                 <td><span th:text="${pasien.tanggalLahir}"></span></td>
                                 <td><span th:text="${pasien.emergencyContactModel.hpEC}"></span></td>
                                 <td>
-                                    <button class="btn btn-primary"><a href="#" style="color: white"> Tambah Diagnosis </a></button>
-                                    <button class="btn btn-primary"><a href="#" style="color: white"> Lihat </a></button>
-                                    <button class="btn btn-primary"><a href="#" style="color: white"> Ubah </a></button>
+                                    <button class="btn btn-primary"><a th:href="@{pasien/{nikPasien}/tambah-diagnosis(nikPasien=${pasien.nikPasien})}" style="color: white"> Tambah Diagnosis </a></button>
+                                    <button class="btn btn-primary"><a th:href="@{pasien(nikPasien=${pasien.nikPasien})}" style="color: white"> Lihat </a></button>
+                                    <button class="btn btn-primary"><a th:href="@{pasien/change/{nikPasien}(nikPasien=${pasien.nikPasien})}" style="color: white"> Ubah </a></button>
                                     <button class="btn btn-danger"><a href="#" style="color: white"> Hapus </a></button>
                                 </td>
                             </tr>

@@ -20,7 +20,13 @@ public interface PasienService {
 
     Optional<PasienModel> getPasiendByIdPasien(Long idPasien);
 
+    Optional<PasienModel> getPasienByNIKPasien(Long nikPasien);
+
     List<AsuransiModel> getAsuransiList();
 
     List<DiagnosisPenyakitModel> getDiagnosisPenyakitList();
+
+    PasienModel changeRestoran(PasienModel pasienModel);
+
+
 }

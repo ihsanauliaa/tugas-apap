@@ -49,12 +49,27 @@ public class PasienInMemoryService implements PasienService{
     }
 
     @Override
+    public Optional<PasienModel> getPasienByNIKPasien(Long nikPasien) {
+        for (PasienModel pasien : listPasien) {
+            if (nikPasien.equals(pasien.getNikPasien())) {
+                return Optional.of(pasien);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public List<AsuransiModel> getAsuransiList() {
         return null;
     }
 
     @Override
     public List<DiagnosisPenyakitModel> getDiagnosisPenyakitList() {
+        return null;
+    }
+
+    @Override
+    public PasienModel changeRestoran(PasienModel pasienModel) {
         return null;
     }
 }

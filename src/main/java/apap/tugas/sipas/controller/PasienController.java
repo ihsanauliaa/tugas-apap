@@ -1,17 +1,17 @@
 package apap.tugas.sipas.controller;
 
 import apap.tugas.sipas.model.AsuransiModel;
+import apap.tugas.sipas.model.DiagnosisPenyakitModel;
 import apap.tugas.sipas.model.EmergencyContactModel;
 import apap.tugas.sipas.model.PasienModel;
 import apap.tugas.sipas.repository.AsuransiDB;
+import apap.tugas.sipas.service.DiagnosisService;
 import apap.tugas.sipas.service.PasienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,10 @@ public class PasienController {
     @Qualifier("pasienServiceImpl")
     @Autowired
     private PasienService pasienService;
+
+    @Qualifier("diagnosisServiceImpl")
+    @Autowired
+    private DiagnosisService diagnosisService;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -62,8 +66,7 @@ public class PasienController {
         List<PasienModel> listPasien = new ArrayList<>();
         listPasien.add(pasien);
         asuransiModel.setListPasien(listPasien);
-        //PasienModel pasienModel = pasienService.getPasiendByIdPasien(pasien.getIdPasien()).get();
-        //pasienModel.setEmergencyContactModel(emergencyContact);
+
         model.addAttribute("namaPasien", pasien.getNamaPasien());
         model.addAttribute("kodePasien", pasien.getKodePasien());
         model.addAttribute("namaEmergencyContact", emergencyContact.getNamaEC());
@@ -86,4 +89,67 @@ public class PasienController {
         model.addAttribute("asuransi", newAsuransiModel);
         return "form-add-pasien";
     }
+
+    @RequestMapping("/pasien")
+    public String view(
+            @RequestParam(value = "nikPasien") Long nikPasien, Model model
+    ) {
+        model.addAttribute("targetPasien", pasienService.getPasienByNIKPasien(nikPasien).get());
+        model.addAttribute("asuransiPasien", pasienService.getPasienByNIKPasien(nikPasien).get().getListAsuransi());
+        model.addAttribute("listPenyakit", diagnosisService.getPenyakitList());
+        return "view-pasien";
+    }
+
+    @RequestMapping(value = "pasien/change/{nikPasien}", method = RequestMethod.GET)
+    public String changePasienFormPage(@PathVariable Long nikPasien, Model model) {
+        PasienModel targetPasien = pasienService.getPasienByNIKPasien(nikPasien).get();
+        model.addAttribute("pasienChange", targetPasien);
+        return "form-change-pasien";
+    }
+
+    @RequestMapping(value = "pasien/change/{nikPasien}", method = RequestMethod.POST)
+    public String changePasienFormSubmit(@PathVariable Long nikPasien, @ModelAttribute PasienModel pasien, Model model) {
+        PasienModel newPasienData = pasienService.changeRestoran(pasien);
+        model.addAttribute("pasienChange", newPasienData);
+        return "change-pasien";
+    }
+
+    @RequestMapping(value = "pasien/{nikPasien}/tambah-diagnosis", method = RequestMethod.GET)
+    public String formAddDiagnosis(@PathVariable Long nikPasien, @ModelAttribute DiagnosisPenyakitModel diagnosisPenyakitModel, Model model) {
+        PasienModel targetPasien = pasienService.getPasienByNIKPasien(nikPasien).get();
+        model.addAttribute("targetPasien", targetPasien);
+        model.addAttribute("listPenyakit", diagnosisService.getPenyakitList());
+        return "form-add-diagnosis-pasien";
+    }
+
+    @RequestMapping(value = "pasien/{nikPasien}/tambah-diagnosis", method = RequestMethod.POST)
+    public String addDiagnosisToPatient(@PathVariable Long nikPasien, @RequestParam Long idDiagnosis, @ModelAttribute DiagnosisPenyakitModel diagnosisPenyakitModel, Model model) {
+        PasienModel targetTambahPasien = pasienService.getPasienByNIKPasien(nikPasien).get();
+        DiagnosisPenyakitModel penyakit = diagnosisService.getPenyakitByIDPenyakit(idDiagnosis).get();
+
+        if (targetTambahPasien.getListDiagnosisPenyakit() == null) {
+            List<DiagnosisPenyakitModel> listDiagnosis = new ArrayList<>();
+            listDiagnosis.add(penyakit);
+            targetTambahPasien.setListDiagnosisPenyakit(listDiagnosis);
+        } else {
+            targetTambahPasien.getListDiagnosisPenyakit().add(0, penyakit);
+        }
+
+        if (penyakit.getListPasien() == null) {
+            List<PasienModel> listPasien = new ArrayList<>();
+            listPasien.add(targetTambahPasien);
+            penyakit.setListPasien(listPasien);
+        } else {
+            penyakit.getListPasien().add(0, targetTambahPasien);
+        }
+
+        pasienService.addPasien(targetTambahPasien);
+
+        DiagnosisPenyakitModel diagnosiss = targetTambahPasien.getListDiagnosisPenyakit().get(0);
+
+        model.addAttribute("namaPenyakit", penyakit.getNamaPenyakit());
+        model.addAttribute("pasienTarget", targetTambahPasien);
+        return "tambah-diagnosis";
+    }
+
 }
