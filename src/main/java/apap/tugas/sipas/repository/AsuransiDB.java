@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AsuransiDB extends JpaRepository<AsuransiModel, Long> {
-    List<AsuransiModel> findByIdAsuransi(Long idAsuransi);
-
+    Optional<AsuransiModel> findByIdAsuransi(Long idAsuransi);
 }

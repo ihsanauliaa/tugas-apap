@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cari Pasien Berdasarkan Diagnosis - Asuransi</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header h-100">Detail Data Pasien</div>
+                <div class="card-body">
+                    <form th:action="@{/pasien/cari/}" method="GET">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            <select name="idDiagnosis" class="form-control selectpicker">
+                                <option value="">Pilih Penyakit</option>
+                                <option th:each="penyakit : ${listPenyakit}"
+                                        th:value="${penyakit.idPenyakit}"
+                                        th:text="${penyakit.namaPenyakit}"></option>
+                            </select>
+                            <select name="idAsuransi" class="form-control selectpicker">
+                                <option value="">Pilih Asuransi</option>
+                                <option th:each="asuransi : ${listAsuransi}"
+                                        th:value="${asuransi.idAsuransi}"
+                                        th:text="${asuransi.namaAsuransi}"></option>
+                            </select>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-primary">Cari</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header h-100">Daftar Pasien</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>NIK</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Kode Pasien</th>
+                            <th>Tempat Lahir</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Telepon Emergency Contact</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pasieen, iterationStatus: ${listPasien}">
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td th:text="${pasieen.namaPasien}"></td>
+                            <td th:text="${pasieen.nikPasien}"></td>
+                            <td th:text="${pasieen.jenisKelamin} == 1 ? 'Laki-laki': 'Perempuan'"></td>
+                            <td th:text="${pasieen.kodePasien}"></td>
+                            <td th:text="${pasieen.tempatLahir}"></td>
+                            <td th:text="${pasieen.tanggalLahir}"></td>
+                            <td th:text="${pasieen.emergencyContactModel.hpEC}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

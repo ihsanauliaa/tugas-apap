@@ -5,6 +5,7 @@ import apap.tugas.sipas.model.DiagnosisPenyakitModel;
 import apap.tugas.sipas.model.EmergencyContactModel;
 import apap.tugas.sipas.model.PasienModel;
 import apap.tugas.sipas.repository.AsuransiDB;
+import apap.tugas.sipas.service.AsuransiService;
 import apap.tugas.sipas.service.DiagnosisService;
 import apap.tugas.sipas.service.PasienService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class PasienController {
@@ -26,6 +28,10 @@ public class PasienController {
     @Qualifier("diagnosisServiceImpl")
     @Autowired
     private DiagnosisService diagnosisService;
+
+    @Qualifier("asuransiServiceImpl")
+    @Autowired
+    private AsuransiService asuransiService;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -179,5 +185,38 @@ public class PasienController {
         model.addAttribute("namaPenyakit", diagnosis.getNamaPenyakit());
         return "search-gender";
     }
+    @RequestMapping(value = "/pasien/cari", method = RequestMethod.GET)
+    public String searchPasienByDiagnosisAndAsuransi(@RequestParam(required = false) Long idAsuransi, @RequestParam(required = false) Long idDiagnosis, Model model) {
+        List<PasienModel> pasienList = new ArrayList<>();
+        model.addAttribute("listAsuransi", pasienService.getAsuransiList());
+        model.addAttribute("listPenyakit", diagnosisService.getPenyakitList());
 
+        if (idAsuransi == null && idDiagnosis == null) {
+            return "cari-pasien";
+        }
+        else if (idDiagnosis != null && idAsuransi == null) {
+            DiagnosisPenyakitModel diagnosis = diagnosisService.getPenyakitByIDPenyakit(idDiagnosis).get();
+            pasienList = diagnosis.getListPasien();
+            model.addAttribute("listPasien", pasienList);
+            return "cari-pasien";
+        }
+        else if (idAsuransi != null && idDiagnosis == null) {
+            AsuransiModel asuransi = asuransiService.getAsuransiByIDAsuransi(idAsuransi).get();
+            pasienList = asuransi.getListPasien();
+            model.addAttribute("listPasien", pasienList);
+            return "cari-pasien";
+        }
+        else {
+            DiagnosisPenyakitModel diagnosis = diagnosisService.getPenyakitByIDPenyakit(idDiagnosis).get();
+            AsuransiModel asuransi = asuransiService.getAsuransiByIDAsuransi(idAsuransi).get();
+            List<PasienModel> pasienListByAsuransi = asuransi.getListPasien();
+            List<PasienModel> pasienListByDiagnosis = diagnosis.getListPasien();
+            pasienList = pasienListByAsuransi.stream()
+                    .distinct()
+                    .filter(pasienListByDiagnosis::contains)
+                    .collect(Collectors.toList());;
+            model.addAttribute("listPasien", pasienList);
+            return "cari-pasien";
+        }
+    }
 }
