@@ -219,4 +219,12 @@ public class PasienController {
             return "cari-pasien";
         }
     }
+
+    @RequestMapping(value = "/pasien/delete/{nikPasien}", method = RequestMethod.GET)
+    public String deletePasien(@PathVariable Long nikPasien, Model model) {
+        PasienModel hapusPasien = pasienService.getPasienByNIKPasien(nikPasien).get();
+        pasienService.deletePasien(hapusPasien);
+        model.addAttribute("targetPasien", hapusPasien.getNamaPasien());
+        return "hapus-pasien";
+    }
 }

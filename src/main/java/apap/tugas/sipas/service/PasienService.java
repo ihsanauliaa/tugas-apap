@@ -28,5 +28,7 @@ public interface PasienService {
 
     PasienModel changeRestoran(PasienModel pasienModel);
 
+    void deletePasien(PasienModel pasienModel);
+
 
 }

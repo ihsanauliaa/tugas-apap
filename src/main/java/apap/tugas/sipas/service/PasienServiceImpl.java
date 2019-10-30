@@ -89,5 +89,10 @@ public class PasienServiceImpl implements PasienService {
         }
     }
 
+    @Override
+    public void deletePasien(PasienModel pasienModel) {
+        pasienDB.delete(pasienModel);
+    }
+
 
 }

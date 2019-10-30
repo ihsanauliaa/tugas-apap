@@ -72,4 +72,9 @@ public class PasienInMemoryService implements PasienService{
     public PasienModel changeRestoran(PasienModel pasienModel) {
         return null;
     }
+
+    @Override
+    public void deletePasien(PasienModel pasienModel) {
+
+    }
 }
