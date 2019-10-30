@@ -44,4 +44,17 @@ public class DiagnosisServiceImpl implements DiagnosisService{
     @Override
     public void deleteDiagnosis(DiagnosisPenyakitModel diagnosisPenyakitModel) {
         diagnosisPenyakitDB.delete(diagnosisPenyakitModel); }
+
+    @Override
+    public DiagnosisPenyakitModel changeDiagnosis(DiagnosisPenyakitModel diagnosisPenyakitModel) {
+        DiagnosisPenyakitModel targetDiagnosis = diagnosisPenyakitDB.findByIdPenyakit(diagnosisPenyakitModel.getIdPenyakit()).get();
+        try {
+            targetDiagnosis.setNamaPenyakit(diagnosisPenyakitModel.getNamaPenyakit());
+            targetDiagnosis.setKodePenyakit(diagnosisPenyakitModel.getKodePenyakit());
+            diagnosisPenyakitDB.save(targetDiagnosis);
+            return targetDiagnosis;
+        } catch (NullPointerException nullException) {
+            return null;
+        }
+    }
 }

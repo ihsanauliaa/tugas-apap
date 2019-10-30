@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,7 +61,8 @@ public class PasienController {
     }
 
     @RequestMapping(path = "/pasien/add", method = RequestMethod.POST)
-    public String addPasienSubmit(@ModelAttribute PasienModel pasien, @ModelAttribute EmergencyContactModel emergencyContact, @ModelAttribute AsuransiModel asuransiModel, Model model) {
+    public String addPasienSubmit(@ModelAttribute PasienModel pasien, @ModelAttribute EmergencyContactModel emergencyContact, @ModelAttribute AsuransiModel asuransiModel, Model model) throws ParseException {
+        pasienService.generateCode(pasien);
         pasien.setEmergencyContactModel(emergencyContact);
         pasienService.addPasien(pasien);
         pasienService.addEmergencyContact(emergencyContact);
@@ -115,7 +117,7 @@ public class PasienController {
 
     @RequestMapping(value = "pasien/change/{nikPasien}", method = RequestMethod.POST)
     public String changePasienFormSubmit(@PathVariable Long nikPasien, @ModelAttribute PasienModel pasien, Model model) {
-        PasienModel newPasienData = pasienService.changeRestoran(pasien);
+        PasienModel newPasienData = pasienService.changePasien(pasien);
         model.addAttribute("pasienChange", newPasienData);
         return "change-pasien";
     }

@@ -6,6 +6,7 @@ import apap.tugas.sipas.model.EmergencyContactModel;
 import apap.tugas.sipas.model.PasienModel;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,12 +70,17 @@ public class PasienInMemoryService implements PasienService{
     }
 
     @Override
-    public PasienModel changeRestoran(PasienModel pasienModel) {
+    public PasienModel changePasien(PasienModel pasienModel) {
         return null;
     }
 
     @Override
     public void deletePasien(PasienModel pasienModel) {
 
+    }
+
+    @Override
+    public PasienModel generateCode(PasienModel pasien) throws ParseException {
+        return null;
     }
 }

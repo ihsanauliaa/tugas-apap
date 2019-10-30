@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
-import java.util.List;
-import java.util.Optional;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @Transactional
@@ -69,7 +71,7 @@ public class PasienServiceImpl implements PasienService {
     }
 
     @Override
-    public PasienModel changeRestoran(PasienModel pasienModel) {
+    public PasienModel changePasien(PasienModel pasienModel) {
         PasienModel targetPasien = pasienDB.findByNikPasien(pasienModel.getNikPasien()).get();
         EmergencyContactModel targetEC = pasienDB.findByNikPasien(pasienModel.getNikPasien()).get().getEmergencyContactModel();
         try {
@@ -78,13 +80,14 @@ public class PasienServiceImpl implements PasienService {
             targetPasien.setJenisKelamin(pasienModel.getJenisKelamin());
             targetPasien.setTanggalLahir(pasienModel.getTanggalLahir());
             targetPasien.setTempatLahir(pasienModel.getTempatLahir());
+            generateCode(targetPasien);
             targetEC.setNamaEC(pasienModel.getEmergencyContactModel().getNamaEC());
             targetEC.setNikEC(pasienModel.getEmergencyContactModel().getNikEC());
             targetEC.setHpEC(pasienModel.getEmergencyContactModel().getHpEC());
             pasienDB.save(targetPasien);
             emergencyContactDB.save(targetEC);
             return targetPasien;
-        } catch (NullPointerException nullException) {
+        } catch (NullPointerException | ParseException nullException) {
             return null;
         }
     }
@@ -94,5 +97,38 @@ public class PasienServiceImpl implements PasienService {
         pasienDB.delete(pasienModel);
     }
 
+    @Override
+    public PasienModel generateCode(PasienModel pasien) throws ParseException {
+        String generatedCode = "";
 
+        int yearPlus = Calendar.getInstance().get(Calendar.YEAR) + 5;
+        String year = Integer.toString(yearPlus);
+        generatedCode += year;
+
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = formatter.parse(pasien.getTanggalLahir());
+        DateFormat dateFormat = new SimpleDateFormat("ddMMyy");
+        String tanggalLahir = dateFormat.format(date);
+        generatedCode += tanggalLahir;
+
+        int jenisKelamin = pasien.getJenisKelamin();
+        String jenisKelaminStr = Integer.toString(jenisKelamin);
+        generatedCode += jenisKelaminStr;
+
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random r = new Random();
+        StringBuilder randoms = new StringBuilder();
+        for (int i = 0; i < 2; i++) {
+            randoms.append(alphabet.charAt(r.nextInt(alphabet.length())));
+        }
+        generatedCode += randoms;
+        for (PasienModel pasienIn : getPasienList()) {
+            if (pasienIn.getKodePasien().equals(generatedCode)) {
+                generateCode(pasien);
+            }
+        }
+        pasien.setKodePasien(generatedCode);
+        return pasien;
+
+    }
 }

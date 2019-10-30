@@ -16,4 +16,6 @@ public interface DiagnosisService {
     Optional<DiagnosisPenyakitModel> getPenyakitByIDPenyakit(Long idPenyakit);
 
     void deleteDiagnosis(DiagnosisPenyakitModel diagnosisPenyakitModel);
+
+    DiagnosisPenyakitModel changeDiagnosis(DiagnosisPenyakitModel diagnosisPenyakitModel);
 }

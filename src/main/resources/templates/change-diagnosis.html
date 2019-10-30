@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ubah Diagnosis</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header h-100">Perubahan data diagnosis berhasil</div>
+                <div class="card-body">
+                    <h2 th:text="'Diagnosis ' + ${diagnosisChange.namaPenyakit} + ' berhasil diubah'"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

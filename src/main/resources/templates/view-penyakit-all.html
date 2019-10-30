@@ -22,7 +22,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Kode</th>
-                            <th scope="col">Jumlah Pasien Terdiagnosis</th>
+                            <th scope="col">Jumlah Pasien</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -30,7 +30,7 @@
                             <td><span th:text="${iterationStatus.index} + 1"></span></td>
                             <td><span th:text="${penyakit.namaPenyakit}"></span></td>
                             <td><span th:text="${penyakit.kodePenyakit}"></span></td>
-                            <td>Thornton</td>
+                            <td class="text-center"><span th:text="${penyakit.listPasien.size()}"></span></td>
                             <td>
                                 <button class="btn btn-primary"><a th:href="@{diagnosis-penyakit(idDiagnosis=${penyakit.idPenyakit})}" style="color: white"> Lihat </a></button>
                                 <button class="btn btn-primary"><a th:href="@{diagnosis-penyakit/change/{idDiagnosis}(idDiagnosis=${penyakit.idPenyakit})}" style="color: white"> Ubah </a></button>
