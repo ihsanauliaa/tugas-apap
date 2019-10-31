@@ -4,20 +4,13 @@
 
 Repo ini merupakan repo tugas pengembangan sistem pelayanan pasien. Berikut merupakan hal yang telah selesai:
 
-- Konfigurasi proyek
-- Pembuatan seluruh model beserta keterhubungannya satu sama lain
-- Pembuatan *basic database*
-- Pembuatan penambahan pasien beserta *emergency contact*-nya
-
-Masih terdapat bug dalam fitur penambahan pasien yaitu:
-
-- Dalam database, kolom *id_ec* masih memiliki nilai *NULL* di setiap barisnya
+- Seluruh fitur
 
 In progress:
 
 - Sisa fitur lain
 
-https://github.com/ihsanauliaa/tugas-apap
+https://github.com/ihsanauliaa/tugas1_sipas_1706043393
 
 ## Contributor
 
