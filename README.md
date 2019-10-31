@@ -8,7 +8,7 @@ Repo ini merupakan repo tugas pengembangan sistem pelayanan pasien. Berikut meru
 
 In progress:
 
-- Sisa fitur lain
+- You tell me
 
 https://github.com/ihsanauliaa/tugas1_sipas_1706043393
 
