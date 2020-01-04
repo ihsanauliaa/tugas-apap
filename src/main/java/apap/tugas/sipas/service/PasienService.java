@@ -6,6 +6,7 @@ import apap.tugas.sipas.model.EmergencyContactModel;
 import apap.tugas.sipas.model.PasienModel;
 
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,17 @@ public interface PasienService {
 
     Optional<PasienModel> getPasiendByIdPasien(Long idPasien);
 
+    Optional<PasienModel> getPasienByNIKPasien(Long nikPasien);
+
     List<AsuransiModel> getAsuransiList();
 
     List<DiagnosisPenyakitModel> getDiagnosisPenyakitList();
+
+    PasienModel changePasien(PasienModel pasienModel);
+
+    void deletePasien(PasienModel pasienModel);
+
+    PasienModel generateCode(PasienModel pasien) throws ParseException;
+
+
 }

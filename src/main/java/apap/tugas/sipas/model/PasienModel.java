@@ -73,6 +73,22 @@ public class PasienModel implements Serializable {
         this.emergencyContactModel = emergencyContactModel;
     }
 
+    public List<AsuransiModel> getListAsuransi() {
+        return listAsuransi;
+    }
+
+    public void setListAsuransi(List<AsuransiModel> listAsuransi) {
+        this.listAsuransi = listAsuransi;
+    }
+
+    public List<DiagnosisPenyakitModel> getListDiagnosisPenyakit() {
+        return listDiagnosisPenyakit;
+    }
+
+    public void setListDiagnosisPenyakit(List<DiagnosisPenyakitModel> listDiagnosisPenyakit) {
+        this.listDiagnosisPenyakit = listDiagnosisPenyakit;
+    }
+
     public Long getIdPasien() {
         return idPasien;
     }

@@ -52,4 +52,12 @@ public class DiagnosisPenyakitModel implements Serializable {
     public void setNamaPenyakit(String namaPenyakit) {
         this.namaPenyakit = namaPenyakit;
     }
+
+    public List<PasienModel> getListPasien() {
+        return listPasien;
+    }
+
+    public void setListPasien(List<PasienModel> listPasien) {
+        this.listPasien = listPasien;
+    }
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ubah Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <hr>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header h-100">Ganti Data Pasien</div>
+                <div class="card-body">
+                    <form th:action="@{/pasien/change/{nikPasien}(nikPasien=${pasienChange.nikPasien})}" th:object="${pasienChange}" method="POST" >
+                        <input type ="hidden" th:field="*{idPasien}" />
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label> Nama:</label>
+                                <input type="text" th:value="*{namaPasien}" name="namaPasien" class="form-control" placeholder="Nama lengkap"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>NIK: </label>
+                                <input type="text" th:value="*{nikPasien}" name="nikPasien" class="form-control" placeholder="NIK pasien"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Jenis Kelamin: </label>
+                                <select th:field="*{jenisKelamin}" name="jenisKelamin" class="form-control">
+                                    <option th:value="1" th:text="Laki-laki"></option>
+                                    <option th:value="2" th:text="Perempuan"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Tanggal lahir: </label>
+                                <input type="date" th:value="*{tanggalLahir}" name="tanggalLahir" class="form-control"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Tempat Lahir: </label>
+                                <input type="text" th:value="*{tempatLahir}" name="tempatLahir" class="form-control" placeholder="Kota lahir pasien"/>
+                            </div>
+                        </div>
+                        <input type ="hidden" th:field="${pasienChange.emergencyContactModel.idEC}" name="idEC" class="form-control"/>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>NIK EC: </label>
+                                <input type="text" th:field="${pasienChange.emergencyContactModel.nikEC}" name="nikEC" class="form-control" placeholder="NIK kontak darurat"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Nama Emergency Contact: </label>
+                                <input type="text" th:field="${pasienChange.emergencyContactModel.namaEC}" name="namaEC" class="form-control" placeholder="Nama kontak darurat"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Nomor Telepon EC: </label>
+                                <input type="text" th:field="${pasienChange.emergencyContactModel.hpEC}" name="hpEC" class="form-control" placeholder="Nomor telepon kontak darurat"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"> Submit </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

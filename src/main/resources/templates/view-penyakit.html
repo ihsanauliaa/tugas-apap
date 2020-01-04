@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Penyakit</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header h-100">Detail Data Diagnosis</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" th:text="'Nama Penyakit: ' + ${targetPenyakit.getNamaPenyakit()}"></li>
+                        <li class="list-group-item" th:text="'Kode Penyakit: ' + ${targetPenyakit.getKodePenyakit()}"></li>
+                    </ul>
+                </div>
+            </div>
+                <div class="card">
+                    <div class="card-header h-100">Pasien yang Terdiagnosis</div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>NIK</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Kode Pasien</th>
+                                <th>Tempat Lahir</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Telepon Emergency Contact</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="pasieen, iterationStatus: ${listPasien}">
+                                <td th:text="${iterationStatus.count}"></td>
+                                <td th:text="${pasieen.namaPasien}"></td>
+                                <td th:text="${pasieen.nikPasien}"></td>
+                                <td th:text="${pasieen.jenisKelamin} == 1 ? 'Laki-laki': 'Perempuan'"></td>
+                                <td th:text="${pasieen.kodePasien}"></td>
+                                <td th:text="${pasieen.tempatLahir}"></td>
+                                <td th:text="${pasieen.tanggalLahir}"></td>
+                                <td th:text="${pasieen.emergencyContactModel.hpEC}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

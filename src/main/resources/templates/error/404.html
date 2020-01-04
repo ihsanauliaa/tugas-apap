@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymelaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>404 Not Found</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br><br><br><br>
+<div class="container">
+    <div class="card align-items-center">
+        <div class="card-header" style="background:#ffffff;">
+            <h2><span>Error 404</span></h2>
+        </div>
+        <div class="card-body">
+            <h3>Oops! Halaman tidak ditemukan</h3>
+        </div>
+    </div>
+</div>
+</body>
+</html>

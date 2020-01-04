@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Diagnosis Penyakit</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header h-100">Daftar Diagnosis Penyakit</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Kode</th>
+                            <th scope="col">Jumlah Pasien</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="penyakit, iterationStatus : ${listPenyakitAll}">
+                            <td><span th:text="${iterationStatus.index} + 1"></span></td>
+                            <td><span th:text="${penyakit.namaPenyakit}"></span></td>
+                            <td><span th:text="${penyakit.kodePenyakit}"></span></td>
+                            <td class="text-center"><span th:text="${penyakit.listPasien.size()}"></span></td>
+                            <td>
+                                <button class="btn btn-primary"><a th:href="@{diagnosis-penyakit(idDiagnosis=${penyakit.idPenyakit})}" style="color: white"> Lihat </a></button>
+                                <button class="btn btn-primary"><a th:href="@{diagnosis-penyakit/change/{idDiagnosis}(idDiagnosis=${penyakit.idPenyakit})}" style="color: white"> Ubah </a></button>
+                                <button class="btn btn-danger"><a th:href="@{/diagnosis-penyakit/delete/{idDiagnosis}(idDiagnosis=${penyakit.idPenyakit})}" style="color: white"> Hapus </a></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary">
+                        <a th:href="@{diagnosis-penyakit/add}" style="color: white"> Tambah Diagnosis </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

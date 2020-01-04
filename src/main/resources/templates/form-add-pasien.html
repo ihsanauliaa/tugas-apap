@@ -1,61 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Pasien</title>
+    <title>Tambah Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 
 <body>
-<h2> Selamat datang di SIPAS</h2>
-<h3> Tambah Pasien</h3>
-<form th:action="@{/pasien/add}" method="POST">
-        <input type ="hidden" th:field="${pasien.idPasien}" />
-        Nama: <br>
-        <label>
-            <input type="text" th:field="${pasien.namaPasien}" name="namaPasien" />
-        </label>
-        <br>
-        Kode: <br>
-        <label>
-            <input type="text" th:field="${pasien.kodePasien}" name="kodePasien" />
-        </label>
-        <br>
-        NIK: <br>
-        <label>
-            <input type="text" th:field="${pasien.nikPasien}" name="nikPasien" />
-        </label>
-        <br>
-        Jenis Kelamin: <br>
-        <label>
-            <input type="text" th:field="${pasien.jenisKelamin}" name="jenisKelamin" />
-        </label>
-        <br>
-        Tanggal lahir: <br>
-        <label>
-            <input type="date" th:field="${pasien.tanggalLahir}" name="tanggalLahir" />
-        </label>
-        <br>
-        Tempat Lahir: <br>
-        <label>
-            <input type="text" th:field="${pasien.tempatLahir}" name="tempatLahir" />
-        </label>
-        <br>
-        <input type ="hidden" th:field="*{emergencyContact.idEC}" name="idEC"/>
-        NIK EC: <br>
-        <label>
-            <input type="text" th:field="*{emergencyContact.nikEC}" name="nikEC" />
-        </label>
-        <br>
-        Nama Emergency Contact: <br>
-        <label>
-            <input type="text" th:field="*{emergencyContact.namaEC}" name="namaEC" />
-        </label>
-        <br>
-        Nomor Telepon EC: <br>
-        <label>
-            <input type="text" th:field="*{emergencyContact.hpEC}" name="hpEC" />
-        </label>
-        <br>
-    <button type="submit"> Submit </button>
-</form>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <hr>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header h-100">Tambah Pasien</div>
+                    <div class="card-body">
+                        <form th:action="@{/pasien/add}" method="POST" th:object="${pasien}">
+                            <input type ="hidden" th:field="*{idPasien}" />
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label> Nama:</label>
+                                        <input type="text" th:field="*{namaPasien}" name="namaPasien" class="form-control" required="true" placeholder="Nama lengkap"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>NIK: </label>
+                                        <input type="text" th:field="*{nikPasien}" name="nikPasien" class="form-control" required="true" placeholder="NIK pasien"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Jenis Kelamin: </label>
+                                        <select th:field="*{jenisKelamin}" name="jenisKelamin" required="true" class="form-control">
+                                            <option value="" hidden="">Jenis Kelamin</option>
+                                            <option th:value="1" th:text="Laki-laki"></option>
+                                            <option th:value="2" th:text="Perempuan"></option>
+                                        </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Asuransi: </label>
+                                    <div class="input-group">
+                                        <select th:each="pasienIn, iterationStatus : *{listAsuransi}"
+                                                th:field="${pasien.listAsuransi[__${iterationStatus.index}__].idAsuransi}" class="form-control" required="true">
+                                            <option value="" hidden="">Pilih Asuransi</option>
+                                            <option th:each="asuransiIn : ${asuransi}"
+                                                    th:value="${asuransiIn.idAsuransi}"
+                                                    th:text="${asuransiIn.namaAsuransi}">
+                                            </option>
+                                        </select>
+                                        <span class="input-group-btn">
+                                            <button type="submit" name="addRow" class="btn btn-primary">Add Row</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Tanggal lahir: </label>
+                                        <input type="date" th:field="*{tanggalLahir}" name="tanggalLahir" class="form-control" required="true"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Tempat Lahir: </label>
+                                        <input type="text" th:field="*{tempatLahir}" name="tempatLahir" class="form-control" placeholder="Kota lahir pasien" required="true"/>
+                                </div>
+                            </div>
+                            <input type ="hidden" th:field="${emergencyContact.idEC}" name="idEC" class="form-control"/>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>NIK EC: </label>
+                                        <input type="text" th:field="${emergencyContact.nikEC}" name="nikEC" class="form-control" placeholder="NIK kontak darurat" required="true"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Nama Emergency Contact: </label>
+                                        <input type="text" th:field="${emergencyContact.namaEC}" name="namaEC" class="form-control" placeholder="Nama kontak darurat" required="true"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Nomor Telepon EC: </label>
+                                        <input type="text" th:field="${emergencyContact.hpEC}" name="hpEC" class="form-control" placeholder="Nomor telepon kontak darurat" required="true"/>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"> Submit </button>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

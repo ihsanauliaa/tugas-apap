@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Tambah Pasien</title>
+    <title>Tambah Diagnosis Pasien</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -14,9 +14,9 @@
     <div class="row">
         <div class="col-md">
             <div class="card">
-                <div class="card-header h-100">Penyimpanan pasien berhasil</div>
+                <div class="card-header h-100">Penyimpanan diagnosis pasien berhasil</div>
                 <div class="card-body">
-                    <h2 th:text="'Pasien ' + ${namaPasien} + ' dengan kode ' + ${kodePasien} + ' berhasil ditambahkan.'"></h2>
+                    <h2 th:text="'Diagnosis penyakit ' + ${namaPenyakit} + ' berhasil ditambahkan ke pasien ' + ${pasienTarget.namaPasien}" ></h2>
                 </div>
             </div>
         </div>

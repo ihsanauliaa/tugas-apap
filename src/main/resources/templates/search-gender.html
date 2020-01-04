@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tambah Diagnosis</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <br><br>
+    <h3 th:text="${namaPenyakit}"></h3><br>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card text-center">
+                <div class="card-header">Laki-laki</div>
+                    <div class="card-body">
+                    <p class="card-text" th:text="${counterMen} + ' orang'"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card text-center">
+                <div class="card-header">Perempuan</div>
+                    <div class="card-body">
+                    <p class="card-text" th:text="${counterWomen} + ' orang'"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
